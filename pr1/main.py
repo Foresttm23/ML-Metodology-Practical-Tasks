@@ -8,12 +8,12 @@ class UniversalNeuron:
         self.lr = lr
         self.weights = [random.uniform(-1, 1) for _ in range(input_size)]
         self.use_scaling = use_scaling
-        self.E_prev = float('inf')
+        self.E_prev = float("inf")
 
     def prepare_time_series(self, data):
         dataset = []
         for i in range(len(data) - self.input_size):
-            inputs = data[i: i + self.input_size]
+            inputs = data[i : i + self.input_size]
             target = data[i + self.input_size]
             dataset.append((inputs, target))
         return dataset
@@ -56,27 +56,30 @@ def run_logic():
     and_data = [([0, 0], 0), ([0, 1], 0), ([1, 0], 0), ([1, 1], 1)]
     nn_and = UniversalNeuron(2)
     nn_and.weights = [1.0, 1.0]
-    for (inputs, output) in and_data:
+    for inputs, output in and_data:
         print(
-            f"\nAND \ninput: {inputs}, \noutput: {output}, \npredicted: {nn_and.step_activation(inputs, 1.5)}\n")
+            f"\nAND \ninput: {inputs}, \noutput: {output}, \npredicted: {nn_and.step_activation(inputs, 1.5)}\n"
+        )
 
     print("-" * 30)
 
     or_data = [([0, 0], 0), ([0, 1], 1), ([1, 0], 1), ([1, 1], 1)]
     nn_or = UniversalNeuron(2)
     nn_or.weights = [1.0, 1.0]
-    for (inputs, output) in or_data:
+    for inputs, output in or_data:
         print(
-            f"\nOR \ninput: {inputs}, \noutput: {output}, \npredicted: {nn_or.step_activation(inputs, 0.5)}\n")
+            f"\nOR \ninput: {inputs}, \noutput: {output}, \npredicted: {nn_or.step_activation(inputs, 0.5)}\n"
+        )
 
     print("-" * 30)
 
     not_data = [([0], 1), ([1], 0)]
     nn_not = UniversalNeuron(1)
     nn_not.weights = [-1.5]
-    for (inputs, output) in not_data:
+    for inputs, output in not_data:
         print(
-            f"\nNOT \ninput: {inputs}, \noutput: {output}, \npredicted: {nn_not.step_activation(inputs, -1)}\n")
+            f"\nNOT \ninput: {inputs}, \noutput: {output}, \npredicted: {nn_not.step_activation(inputs, -1)}\n"
+        )
 
 
 def run_xor():
@@ -96,14 +99,31 @@ def run_xor():
         return n3.step_activation([y1, y2], 0.5)
 
     xor_data = [([0, 0], 0), ([0, 1], 1), ([1, 0], 1), ([1, 1], 0)]
-    for (inputs, output) in xor_data:
+    for inputs, output in xor_data:
         print(
-            f"\nXOR \ninput: {inputs}, \noutput: {output}, \npredicted: {xor_network(inputs[0], inputs[1])}\n")
+            f"\nXOR \ninput: {inputs}, \noutput: {output}, \npredicted: {xor_network(inputs[0], inputs[1])}\n"
+        )
 
 
 def run_series():
     print("\n" + "=" * 10 + " TIME SERIES " + "=" * 10)
-    full_data = [1.92, 4.01, 1.48, 5.45, 1.56, 5.42, 1.28, 4.34, 1.51, 5.49, 1.32, 4.00, 0.49, 4.19, 1.53]
+    full_data = [
+        1.92,
+        4.01,
+        1.48,
+        5.45,
+        1.56,
+        5.42,
+        1.28,
+        4.34,
+        1.51,
+        5.49,
+        1.32,
+        4.00,
+        0.49,
+        4.19,
+        1.53,
+    ]
 
     nn = UniversalNeuron(input_size=3, lr=0.1, use_scaling=True)
 
@@ -111,7 +131,7 @@ def run_series():
     test_data = [train_data.pop(), train_data.pop()]
 
     epoch = 0
-    prev_error = float('inf')
+    prev_error = float("inf")
     while True:
         curr_error = nn.train_on_batch(train_data)
         epoch += 1
